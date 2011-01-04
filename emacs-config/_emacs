@@ -1,0 +1,79 @@
+;; .emacs
+
+;;; uncomment this line to disable loading of "default.el" at startup
+;; (setq inhibit-default-init t)
+
+;; turn on font-lock mode
+(when (fboundp 'global-font-lock-mode)
+  (global-font-lock-mode t))
+
+;; enable visual feedback on selections
+(setq transient-mark-mode t)
+
+;; default to better frame titles
+(setq frame-title-format
+      (concat  "%b - emacs@" system-name))
+
+(setq column-number-mode t)
+
+;; This is only for emacs21
+;;(require 'un-define)
+(set-language-environment 'utf-8)
+(setq locale-coding-system 'utf-8)
+(prefer-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-selection-coding-system 'utf-8)
+(set-clipboard-coding-system 'ctext)
+(set-buffer-file-coding-system 'utf-8)
+
+;; set cscope 
+(add-to-list 'load-path "~/.emacs.d/site-lisp")
+;(load-file "~/.emacs.d/site-lisp/xcscope.el")
+(require 'xcscope)
+
+;;set the cedet enviroment
+(add-to-list 'load-path "~/.emacs.d/cedet-1.0pre7/common")
+(require 'cedet)
+(require 'semantic-ia)
+ 
+;; Enable EDE (Project Management) features
+;(global-ede-mode 1)
+(semantic-load-enable-excessive-code-helpers)
+(semantic-load-enable-semantic-debugging-helpers)
+ 
+;; Enable SRecode (Template management) minor-mode.
+(global-srecode-minor-mode 1)
+
+;; The following sets the c and c++ header files
+;; (setq semanticdb-project-roots (list (expand-file-name "/")))
+(defconst cedet-user-include-dirs
+  (list ".." "../core" "../event" "../http" "../mail" "../misc" "../os"
+        "../.." "../../include" "../../inc" "../../common" "../../public"))
+;; (defconst cedet-win32-include-dirs
+;;   (list "C:/MinGW/include"
+;;         "C:/MinGW/include/c++/3.4.5"
+;;         "C:/MinGW/include/c++/3.4.5/mingw32"
+;;         "C:/MinGW/include/c++/3.4.5/backward"
+;;         "C:/MinGW/lib/gcc/mingw32/3.4.5/include"
+;;         "C:/Program Files/Microsoft Visual Studio/VC98/MFC/Include"))
+(require 'semantic-c nil 'noerror)
+(let ((include-dirs cedet-user-include-dirs))
+  (when (eq system-type 'windows-nt)
+    (setq include-dirs (append include-dirs cedet-win32-include-dirs)))
+  (mapc (lambda (dir)
+          (semantic-add-system-include dir 'c++-mode)
+          (semantic-add-system-include dir 'c-mode))
+        include-dirs))
+
+(global-set-key [f12] 'semantic-ia-fast-jump)
+(define-key c-mode-base-map (kbd "M-n") 'semantic-ia-complete-symbol)
+
+;; set the java development enviroment
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/elib"))
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/jdee/lisp"))
+(require 'jde)
+
+
+
+
