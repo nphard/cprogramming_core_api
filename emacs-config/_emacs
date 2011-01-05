@@ -7,6 +7,8 @@
 (when (fboundp 'global-font-lock-mode)
   (global-font-lock-mode t))
 
+(tool-bar-mode nil)
+
 ;; enable visual feedback on selections
 (setq transient-mark-mode t)
 
@@ -26,6 +28,22 @@
 (set-selection-coding-system 'utf-8)
 (set-clipboard-coding-system 'ctext)
 (set-buffer-file-coding-system 'utf-8)
+
+;; Programming Development Settings
+(defun my-c-mode-common-hook()
+  (setq default-tab-width 4 indent-tabs-mode nil)
+  (setq tab-width 4 indent-tabs-mode nil)
+  (setq c-basic-offset 4)
+  (setq hs-minor-mode t)
+  (setq abbrev-mode t))
+(add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
+
+(defun my-c++-mode-hook()
+  (setq default-tab-width 4 indent-tabs-mode nil)
+  (setq tab-width 4 indent-tabs-mode nil)
+  (setq c-basic-offset 4)
+  (c-set-style "stroustrup"))
+(add-hook 'c++-mode-hook 'my-c++-mode-hook)
 
 ;; set cscope 
 (add-to-list 'load-path "~/.emacs.d/site-lisp")
@@ -73,6 +91,7 @@
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/elib"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/jdee/lisp"))
 (require 'jde)
+
 
 
 
