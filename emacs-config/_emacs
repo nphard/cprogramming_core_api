@@ -1,4 +1,6 @@
 ;; .emacs
+;; Save the back file in a fixed position
+(setq backup-directory-alist '(("" . "~/.emacs.d/emacs-backup"))) 
 
 ;;; uncomment this line to disable loading of "default.el" at startup
 ;; (setq inhibit-default-init t)
@@ -29,12 +31,13 @@
 (set-clipboard-coding-system 'ctext)
 (set-buffer-file-coding-system 'utf-8)
 
+
 ;; Programming Development Settings
 (defun my-c-mode-common-hook()
   (setq default-tab-width 4 indent-tabs-mode nil)
   (setq tab-width 4 indent-tabs-mode nil)
   (setq c-basic-offset 4)
-  (setq hs-minor-mode t)
+  (setq hs-minor-mode t) 
   (setq abbrev-mode t))
 (add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
 
@@ -45,9 +48,16 @@
   (c-set-style "stroustrup"))
 (add-hook 'c++-mode-hook 'my-c++-mode-hook)
 
-;; set cscope 
+;; add the extra package
 (add-to-list 'load-path "~/.emacs.d/site-lisp")
-;(load-file "~/.emacs.d/site-lisp/xcscope.el")
+
+;; set the color theme
+(require  'color-theme)
+(color-theme-initialize)
+(color-theme-sitaramv-solaris)
+
+
+;; set cscope 
 (require 'xcscope)
 
 ;;set the cedet enviroment
@@ -69,10 +79,10 @@
   (list ".." "../core" "../event" "../http" "../mail" "../misc" "../os"
         "../.." "../../include" "../../inc" "../../common" "../../public"))
 ;; (defconst cedet-win32-include-dirs
-;;   (list "C:/MinGW/include"
+;;   (list "C:/MinGW/include" 
 ;;         "C:/MinGW/include/c++/3.4.5"
 ;;         "C:/MinGW/include/c++/3.4.5/mingw32"
-;;         "C:/MinGW/include/c++/3.4.5/backward"
+;;         "C:/MinGW/include/c++/3.4.5/backward" 
 ;;         "C:/MinGW/lib/gcc/mingw32/3.4.5/include"
 ;;         "C:/Program Files/Microsoft Visual Studio/VC98/MFC/Include"))
 (require 'semantic-c nil 'noerror)
@@ -91,8 +101,3 @@
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/elib"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/jdee/lisp"))
 (require 'jde)
-
-
-
-
-
