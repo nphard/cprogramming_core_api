@@ -128,7 +128,7 @@ void heapify_min_heap(MIN_HEAP heap, int node){
   nodep=get_at_dp_list(heap->list,node);
 
   func=heap->compare;
-  
+
   if(left <= heap->size && func(leftp,nodep) < 0){
     min=left;
     largestp=leftp;
