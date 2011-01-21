@@ -1,4 +1,11 @@
-PROJECT(DBLAYER)
-CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
+set(HEADER_LIST dblayer.h)
+set(SRC_LIST ${HEADER_LIST} dblayer.c)
 
-ADD_SUBDIRECTORY(src lib)
+include_directories(../core)
+
+add_library(dblayer ${SRC_LIST})
+set_target_properties(dblayer PROPERTIES CLEAN_DIRECT_OUTPUT 1)
+set_target_properties(dblayer PROPERTIES VERSION 1.0 SOVERSION 1)
+
+
+#install(FILES {HEADER_LIST} DESTINATION include)
