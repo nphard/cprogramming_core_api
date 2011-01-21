@@ -24,7 +24,7 @@ SET(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
 #SET(BUILD_SHARED_LIBS ON)
 add_subdirectory(core)
 add_subdirectory(dblayer)
-
+add_subdirectory(utils)
 
 ### utils ####
 
