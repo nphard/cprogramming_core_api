@@ -50,11 +50,16 @@
 
 ;; add the extra package
 (add-to-list 'load-path "~/.emacs.d/site-lisp")
+(add-to-list 'load-path
+                  "~/.emacs.d//yasnippet")
+(require 'yasnippet) 
+(yas/initialize)
+(yas/load-directory "~/.emacs.d/yasnippet/snippets")
 
 ;; set the color theme
 (require  'color-theme)
 (color-theme-initialize)
-(color-theme-sitaramv-solaris)
+(color-theme-renegade)
 
 ;; add cmake support
 ; Add cmake listfile names to the mode list.
@@ -100,12 +105,12 @@
 (semantic-load-enable-semantic-debugging-helpers)
  
 ;; Enable SRecode (Template management) minor-mode.
-(global-srecode-minor-mode 1)
+(global-srecode-minor-mode 0)
 
 ;; The following sets the c and c++ header files
 ;; (setq semanticdb-project-roots (list (expand-file-name "/")))
 (defconst cedet-user-include-dirs
-  (list ".." "../core" "../event" "../http" "../mail" "../misc" "../os"
+  (list ".." "../core" "../event" "../http" "../mail" "../misc" "../os" "../include"
         "../.." "../../include" "../../inc" "../../common" "../../public"))
 ;; (defconst cedet-win32-include-dirs
 ;;   (list "C:/MinGW/include" 
@@ -130,3 +135,4 @@
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/elib"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/jdee/lisp"))
 (require 'jde)
+(put 'dired-find-alternate-file 'disabled nil)
