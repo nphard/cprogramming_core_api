@@ -2,6 +2,7 @@
 ;; Save the back file in a fixed position
 (setq backup-directory-alist '(("" . "~/.emacs.d/emacs-backup"))) 
 
+
 ;;; uncomment this line to disable loading of "default.el" at startup
 ;; (setq inhibit-default-init t)
 
@@ -30,8 +31,9 @@
 (set-clipboard-coding-system 'ctext)
 (set-buffer-file-coding-system 'utf-8)
 
-(require 'magit)
 
+
+(require 'magit)
 ;; add the extra package
 (add-to-list 'load-path "~/.emacs.d/site-lisp")
 
@@ -151,3 +153,5 @@
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/jdee/lisp"))
 (require 'jde)
 (put 'dired-find-alternate-file 'disabled nil)
+
+(set-cursor-color "green")
