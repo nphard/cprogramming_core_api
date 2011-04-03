@@ -10,7 +10,6 @@
   (global-font-lock-mode t))
 
 (tool-bar-mode nil)
-
 ;; enable visual feedback on selections
 (setq transient-mark-mode t)
 
@@ -31,6 +30,22 @@
 (set-clipboard-coding-system 'ctext)
 (set-buffer-file-coding-system 'utf-8)
 
+(require 'magit)
+
+;; add the extra package
+(add-to-list 'load-path "~/.emacs.d/site-lisp")
+
+;; define the erlang environment
+(setq load-path (cons  "/usr/local/erl/lib/erlang/lib/tools-2.6.6.2/emacs"
+      load-path))
+(require 'erlang-start)
+
+(add-to-list 'auto-mode-alist '("\\.erl?$" . erlang-mode))
+(add-to-list 'auto-mode-alist '("\\.hrl?$" . erlang-mode))
+
+(setq erlang-root-dir "/usr/local/erl")
+(add-to-list 'exec-path "/usr/local/erl/bin")
+;(setq erlang-man-root-dir "/usr/local/lib/erlang/man")
 
 ;; Programming Development Settings
 (defun my-c-mode-common-hook()
@@ -51,7 +66,7 @@
 ;; add the extra package
 (add-to-list 'load-path "~/.emacs.d/site-lisp")
 (add-to-list 'load-path
-                  "~/.emacs.d//yasnippet")
+                  "~/.emacs.d/yasnippet")
 (require 'yasnippet) 
 (yas/initialize)
 (yas/load-directory "~/.emacs.d/yasnippet/snippets")
@@ -105,12 +120,12 @@
 (semantic-load-enable-semantic-debugging-helpers)
  
 ;; Enable SRecode (Template management) minor-mode.
-(global-srecode-minor-mode 0)
+(global-srecode-minor-mode 1)
 
 ;; The following sets the c and c++ header files
 ;; (setq semanticdb-project-roots (list (expand-file-name "/")))
 (defconst cedet-user-include-dirs
-  (list ".." "../core" "../event" "../http" "../mail" "../misc" "../os" "../include"
+  (list ".." "../core" "../event" "../http" "../mail" "../misc" "../os"
         "../.." "../../include" "../../inc" "../../common" "../../public"))
 ;; (defconst cedet-win32-include-dirs
 ;;   (list "C:/MinGW/include" 
