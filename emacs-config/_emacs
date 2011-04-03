@@ -20,6 +20,17 @@
 
 (setq column-number-mode t)
 
+;; set for the terminal
+(require 'multi-term)
+(setq milti-term-program "/bin/bash") 
+(global-set-key "\C-x." 'multi-term)
+(global-set-key "\C-x," 'multi-term-dedicated-open)
+(global-set-key"\C-xn" 'multi-term-next)
+(global-set-key"\C-xp" 'multi-term-prev)
+(setq multi-term-dedicated-select-after-open-p t)
+
+
+
 ;; This is only for emacs21
 ;;(require 'un-define)
 (set-language-environment 'utf-8)
@@ -58,7 +69,7 @@
   (setq abbrev-mode t))
 (add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
 
-(defun my-c++-mode-hook()
+(defun my-c++-de-hook()
   (setq default-tab-width 4 indent-tabs-mode nil)
   (setq tab-width 4 indent-tabs-mode nil)
   (setq c-basic-offset 4)
