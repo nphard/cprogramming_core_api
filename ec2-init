@@ -1,0 +1,93 @@
+########## install the software ################
+sudo useradd -d /home/dujin -m dujin
+sudo passwd dujin
+
+sudo visudo
+
+#Go to the line that says #User privilege specificationroot ALL=(ALL) ALL.
+#And Add dan ALL=(ALL) ALL
+#Control X. Type Y and hit enter.
+
+sudo cp /etc/ssh/sshd_config /etc/ssh/sshd_config.original
+sudo chmod a-w /etc/ssh/sshd_config.original
+sudo vi /etc/ssh/sshd_config
+
+Make sure that you change PasswordAuthentication no to:
+PasswordAuthentication yes
+sudo /etc/init.d/ssh restart
+
+sudo dpkg-reconfigure dash
+
+sudo apt-get install build-essential
+sudo apt-get install libpcre3-dev
+sudo apt-get install libssh-dev
+sudo apt-get install libxml2-dev
+sudo apt-get install python-dev
+sudo apt-get install erlang
+sudo apt-get install git
+
+wget http://nginx.org/download/nginx-0.9.6.tar.gz
+mkdir -p /home/dujin/prog/install
+
+wget http://projects.unbit.it/downloads/uwsgi-0.9.7.1.tar.gz
+
+wget http://www.monkey.org/~provos/libevent-2.0.10-stable.tar.gz
+wget http://memcached.googlecode.com/files/memcached-1.4.5.tar.gz
+
+git clone https://github.com/pinax/pinax.git pinax
+
+git clone git@github.com/eroche/fullchinese.git
+
+######## about the pinax #########
+1. Virtual Enviroment Setup:
+   a. Python 2.6 should be installed and in the path. 
+   b. Install virtualenv, now the newest release is 1.5.1 ,check http://pypi.python.org/pypi/virtualenv. 
+      $ wget http://pypi.python.org/packages/source/v/virtualenv/virtualenv-1.5.1.tar.gz#md5=3daa1f449d5d2ee03099484cecb1c2b7
+      $ tar xzf virtualenv-1.5.1.tar.gz 
+      $ cd virtualenv-1.5.1
+      $ python setup.py install
+   c. Start the virtual enviroment for pinax develpment:
+      $ virtualenv ../pinax-env
+      $ source ../pinax-env/bin/activate
+  Now the virtual enviroment is ready, we need get pinax and memcached
+
+4. memcached setting. Download the memcached, make & make install; start the memcached :
+   $ memcached -d  
+  Check the fullchinese/setting.py for the memcached address setting:
+"CACHE_BACKEND="memcached://127.0.0.1:11211/?timeout=86400" #86400 sec = 24hours"
+
+2. python-memcached package install. We need the python-memcached package for django to access memcached:
+   (pinax-env)$ wget ftp://ftp.tummy.com/pub/python-memcached/python-memcached-latest.tar.gz
+   (pinax-env)$ tar xzf python-memcached-latest.tar.gz 
+   (pinax-env)$ cd python-memcached-latest
+   (pinax-env)$ python setup.py install 
+
+3. Get the latest development version of Pinax and install it. 
+   (pinax-env)$ git clone git://github.com/pinax/pinax.git
+   (pinax-env)$ cd pinax
+   (pinax-env)$ python scripts/pinax-boot.py ../pinax-env
+ Note: pinax-env/ is the virtual environment directory created in step 1.c.  This step will get the pinax and 
+install to the pinax-env enviroment.  
+
+   (pinax-env)$ pinax-admin setup_project -b basic ../pinax-basic
+ Note: This step is neccesary since pinax-admin will install some third-party django-project into your python enviroment.
+After that you could rm the directory of ../pinax-basic
+
+ After downloading some packages and install them, all the envrioment is set.
+
+4. Start the development and testing: 
+   (pinax-env)$ cd fullchinese
+   (pinax-env)$ python manage.py syncdb
+   (pinax-env)$ python manage.py runserver 0.0.0.0:8000
+
+ Try the location http://ip_address:8000 with your browser.
+
+
+####### about the server #########
+
+server:
+	/usr/local/nginx/sbin/nginx -c conf/nginx.conf -p /home/dujin/prog/fullchinese/
+
+kill:
+	kill -TERM `cat logs/nginx.pid`
+
