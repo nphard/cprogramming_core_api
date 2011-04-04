@@ -1,0 +1,10 @@
+WebAPI :   This is the RESTful WEB interface which might be used by our client other than just web browser. This could use django-piston;
+static:    This is the images and css and js which will be used for the WEB user interface, and this will be served by the nginx;
+WebUI:     This is the dynamic web user interface which will be created by the user's request. There are some js elements which could only served by the Jquery and WebAPI service on the user's web pages.
+Models including all the roles functions: couch, students, parents
+
+##client:  This is the desktop client which could connect with the WebAPI service and sync user's profile. Doesn't locate in the directory.
+
+Every api should have a localization & international features for all the messeges and warnings of the system.
+
+ 

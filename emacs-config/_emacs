@@ -2,6 +2,7 @@
 ;; Save the back file in a fixed position
 (setq backup-directory-alist '(("" . "~/.emacs.d/emacs-backup"))) 
 
+
 ;;; uncomment this line to disable loading of "default.el" at startup
 ;; (setq inhibit-default-init t)
 
@@ -10,7 +11,6 @@
   (global-font-lock-mode t))
 
 (tool-bar-mode nil)
-
 ;; enable visual feedback on selections
 (setq transient-mark-mode t)
 
@@ -19,6 +19,17 @@
       (concat  "%b - emacs@" system-name))
 
 (setq column-number-mode t)
+
+;; set for the terminal
+(require 'multi-term)
+(setq milti-term-program "/bin/bash") 
+(global-set-key "\C-x." 'multi-term)
+(global-set-key "\C-x," 'multi-term-dedicated-open)
+(global-set-key"\C-xn" 'multi-term-next)
+(global-set-key"\C-xp" 'multi-term-prev)
+(setq multi-term-dedicated-select-after-open-p t)
+
+
 
 ;; This is only for emacs21
 ;;(require 'un-define)
@@ -32,6 +43,23 @@
 (set-buffer-file-coding-system 'utf-8)
 
 
+
+(require 'magit)
+;; add the extra package
+(add-to-list 'load-path "~/.emacs.d/site-lisp")
+
+;; define the erlang environment
+(setq load-path (cons  "/usr/local/erl/lib/erlang/lib/tools-2.6.6.2/emacs"
+      load-path))
+(require 'erlang-start)
+
+(add-to-list 'auto-mode-alist '("\\.erl?$" . erlang-mode))
+(add-to-list 'auto-mode-alist '("\\.hrl?$" . erlang-mode))
+
+(setq erlang-root-dir "/usr/local/erl")
+(add-to-list 'exec-path "/usr/local/erl/bin")
+;(setq erlang-man-root-dir "/usr/local/lib/erlang/man")
+
 ;; Programming Development Settings
 (defun my-c-mode-common-hook()
   (setq default-tab-width 4 indent-tabs-mode nil)
@@ -41,7 +69,7 @@
   (setq abbrev-mode t))
 (add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
 
-(defun my-c++-mode-hook()
+(defun my-c++-de-hook()
   (setq default-tab-width 4 indent-tabs-mode nil)
   (setq tab-width 4 indent-tabs-mode nil)
   (setq c-basic-offset 4)
@@ -50,11 +78,16 @@
 
 ;; add the extra package
 (add-to-list 'load-path "~/.emacs.d/site-lisp")
+(add-to-list 'load-path
+                  "~/.emacs.d/yasnippet")
+(require 'yasnippet) 
+(yas/initialize)
+(yas/load-directory "~/.emacs.d/yasnippet/snippets")
 
 ;; set the color theme
 (require  'color-theme)
 (color-theme-initialize)
-(color-theme-sitaramv-solaris)
+(color-theme-renegade)
 
 ;; add cmake support
 ; Add cmake listfile names to the mode list.
@@ -130,3 +163,6 @@
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/elib"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/jdee/lisp"))
 (require 'jde)
+(put 'dired-find-alternate-file 'disabled nil)
+
+(set-cursor-color "green")
