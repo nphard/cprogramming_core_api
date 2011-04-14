@@ -2,6 +2,9 @@
 ;; Save the back file in a fixed position
 (setq backup-directory-alist '(("" . "~/.emacs.d/emacs-backup"))) 
 
+;; add the extra package
+(add-to-list 'load-path "~/.emacs.d/site-lisp")
+
 
 ;;; uncomment this line to disable loading of "default.el" at startup
 ;; (setq inhibit-default-init t)
@@ -9,6 +12,8 @@
 ;; turn on font-lock mode
 (when (fboundp 'global-font-lock-mode)
   (global-font-lock-mode t))
+
+(setq eshell-buffer-shorthand t)
 
 (tool-bar-mode nil)
 ;; enable visual feedback on selections
@@ -18,17 +23,9 @@
 (setq frame-title-format
       (concat  "%b - emacs@" system-name))
 
+(iswitchb-mode 1)
+
 (setq column-number-mode t)
-
-;; set for the terminal
-(require 'multi-term)
-(setq milti-term-program "/bin/bash") 
-(global-set-key "\C-x." 'multi-term)
-(global-set-key "\C-x," 'multi-term-dedicated-open)
-(global-set-key"\C-xn" 'multi-term-next)
-(global-set-key"\C-xp" 'multi-term-prev)
-(setq multi-term-dedicated-select-after-open-p t)
-
 
 
 ;; This is only for emacs21
@@ -45,8 +42,20 @@
 
 
 (require 'magit)
-;; add the extra package
-(add-to-list 'load-path "~/.emacs.d/site-lisp")
+
+;; set for the terminal
+(require 'multi-term)
+(setq milti-term-program "/bin/bash") 
+(global-set-key "\C-x." 'multi-term)
+(global-set-key "\C-x," 'multi-term-dedicated-open)
+(global-set-key"\C-xn" 'multi-term-next)
+(global-set-key"\C-xp" 'multi-term-prev)
+(setq multi-term-dedicated-select-after-open-p t)
+
+(defun ash-term-hooks ()
+(setq term-default-bg-color (face-background 'default))
+(setq term-default-fg-color (face-foreground 'default)))
+(add-hook 'term-mode-hook 'ash-term-hooks)
 
 ;; define the erlang environment
 (setq load-path (cons  "/usr/local/erl/lib/erlang/lib/tools-2.6.6.2/emacs"
@@ -87,10 +96,11 @@
 ;; set the color theme
 (require  'color-theme)
 (color-theme-initialize)
-(color-theme-renegade)
+(color-theme-hober)
 
 ;; add cmake support
-; Add cmake listfile names to the mode list.
+; 
+;Add cmake listfile names to the mode list.
 (require 'cmake-mode)
 (setq auto-mode-alist
 	    (append
@@ -99,7 +109,8 @@
 			      auto-mode-alist))
 (autoload 'cmake-mode "~/CMake/Docs/cmake-mode.el" t)
 
-(defun cmake-rename-buffer ()
+(defun cmake-rename-buffer
+ ()
   "Renames a CMakeLists.txt buffer to cmake-<directory name>."
   (interactive)
   ;(print (concat "buffer-filename = " (buffer-file-name)))
