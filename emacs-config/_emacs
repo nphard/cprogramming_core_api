@@ -5,7 +5,7 @@
 ;; add the extra package
 (add-to-list 'load-path "~/.emacs.d/site-lisp")
 
-(global-set-key "\C-x." 'multi-term)
+(global-set-key "\C-m" 'set-mark-command)
 ;;; uncomment this line to disable loading of "default.el" at startup
 ;; (setq inhibit-default-init t)
 
@@ -58,15 +58,15 @@
 (add-hook 'term-mode-hook 'ash-term-hooks)
 
 ;; define the erlang environment
-(setq load-path (cons  "/usr/local/erl/lib/erlang/lib/tools-2.6.6.2/emacs"
-      load-path))
-(require 'erlang-start)
+;(setq load-path (cons  "/usr/local/erl/lib/erlang/lib/tools-2.6.6.2/emacs"
+;      load-path))
+;(require 'erlang-start)
 
-(add-to-list 'auto-mode-alist '("\\.erl?$" . erlang-mode))
-(add-to-list 'auto-mode-alist '("\\.hrl?$" . erlang-mode))
+;(add-to-list 'auto-mode-alist '("\\.erl?$" . erlang-mode))
+;(add-to-list 'auto-mode-alist '("\\.hrl?$" . erlang-mode))
 
-(setq erlang-root-dir "/usr/local/erl")
-(add-to-list 'exec-path "/usr/local/erl/bin")
+;(setq erlang-root-dir "/usr/local/erl")
+;(add-to-list 'exec-path "/usr/local/erl/bin")
 ;(setq erlang-man-root-dir "/usr/local/lib/erlang/man")
 
 ;; Programming Development Settings
