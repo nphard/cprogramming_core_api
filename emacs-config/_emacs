@@ -6,6 +6,13 @@
 (add-to-list 'load-path "~/.emacs.d/site-lisp")
 
 (global-set-key "\C-m" 'set-mark-command)
+(global-set-key (kbd "M-;") 'set-mark-command)
+(global-set-key (kbd "C-x j") 'iswitchb-buffer-other-window) ; was digit-argument
+(global-set-key (kbd "M-9") 'kill-buffer-and-window) ; was digit-argument
+(global-set-key (kbd "M-4") 'split-window-vertically) ; was digit-argument
+(global-set-key (kbd "M-3") 'delete-other-windows) ; was digit-argument
+(global-set-key (kbd "M-s") 'other-window) ; was center-line
+
 ;;; uncomment this line to disable loading of "default.el" at startup
 ;; (setq inhibit-default-init t)
 
